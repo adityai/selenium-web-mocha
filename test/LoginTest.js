@@ -30,8 +30,10 @@ describe('Login', function () {
     await driver.findElement({ id: "login_field" }).sendKeys("incorrect-username")
     await driver.findElement({ id: "password" }).sendKeys("tester")
     await driver.findElement({ xpath: '//*[@id="login"]/div[4]/form/input[14]' }).click()
-    assert(await driver.findElement({ xpath: '//*[@id="js-flash-container"]/div' }).isDisplayed())
-
+    errorBoxElement = await driver.findElement({ xpath: '//*[@id="js-flash-container"]/div' })
+    assert(await errorBoxElement.isDisplayed())
+    console.log(await errorBoxElement.getText())
+    // assert(errorBoxElement.getText() == "Incorrect username or password")
   })
 })
 
