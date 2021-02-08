@@ -1,24 +1,26 @@
+const BasePage = require('./BasePage')
 const USERNAME_TEXTBOX = { id: "login_field" }
 const PASSWORD_TEXTBOX = { id: 'password' }
 const SUBMIT_BUTTON = { name: 'commit' }
 const ERROR_MESSAGE = { className: 'container-lg px-2' }
 const LOGIN_PAGE = { id: "js-pjax-container"}
 
-class LoginPage {
+
+class LoginPage extends BasePage {
     constructor(driver) {
-        this.driver = driver
+        super(driver)
     }
 
     async load() {
-        await this.driver.get('https://github.com/login')
+        await this.loadPage('https://github.com/login')
         if (!(await this.driver.findElement(LOGIN_PAGE).isDisplayed()))
             throw new Error('Login page not loaded')
     }
 
     async authenticate(username, password) {
-        await this.driver.findElement(USERNAME_TEXTBOX).sendKeys(username)
-        await this.driver.findElement(PASSWORD_TEXTBOX).sendKeys(password)
-        await this.driver.findElement(SUBMIT_BUTTON).click()
+        await this.type(USERNAME_TEXTBOX, username)
+        await this.type(PASSWORD_TEXTBOX, password)
+        await this.click(SUBMIT_BUTTON)
     }
 
     async errorMessageBoxPresent() {
