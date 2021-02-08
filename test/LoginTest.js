@@ -1,6 +1,7 @@
 const { Builder } = require('selenium-webdriver')
 // const path = require('path')`
 const assert = require('assert')
+const LoginPage = require('../pages/LoginPage')
 
 function takeScreenshot(image, err) {
   require('fs').writeFile('out.png', image, 'base64', function (err) {
@@ -11,9 +12,12 @@ function takeScreenshot(image, err) {
 describe('Login', function () {
   this.timeout(30000)
   let driver
+  let login
 
   beforeEach(async function () {
     driver = await new Builder().forBrowser('chrome').build()
+    login = new LoginPage(driver)
+    await login.load()
   })
 
   afterEach(async function () {
@@ -25,15 +29,11 @@ describe('Login', function () {
     await driver.quit()
   })
 
-  it('with in-valid credentials', async function () {
-    await driver.get('https://github.com/login')
-    await driver.findElement({ id: "login_field" }).sendKeys("incorrect-username")
-    await driver.findElement({ id: "password" }).sendKeys("tester")
-    await driver.findElement({ xpath: '//*[@id="login"]/div[4]/form/input[14]' }).click()
-    errorBoxElement = await driver.findElement({ xpath: '//*[@id="js-flash-container"]/div' })
-    assert(await errorBoxElement.isDisplayed(), "Invalid login or password is displayed")
-    errorBoxElementText = await errorBoxElement.getText()
-    console.log(errorBoxElementText)
-    assert(errorBoxElementText == "Incorrect username or password.", "'Incorrect username or password.' is displayed.")
+
+  it('with in-valid credentials', async function() {
+    await login.authenticate('incorrect-username', 'YaRight!')
+    assert(await login.errorMessageBoxPresent(), "Error message box is displayed")
+    assert(await login.getErrorMessageText() == "Incorrect username or password.", "'Incorrect username or password.' is displayed")
   })
+
 })
