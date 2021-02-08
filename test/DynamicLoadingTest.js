@@ -1,28 +1,30 @@
-const { Builder } = require('selenium-webdriver')
+require('./DriverFactoryHelper')
+
 //const path = require('path')
 const assert = require('assert')
 const DynamicLoadingPage = require('../pages/DynamicLoadingPage')
 
 describe('Dynamic Loading', function() {
-    this.timeout(30000)
-    let dynamicLoading
+    let dynamicLoadingPage
 
     beforeEach(async function () {
-        const vendorDirectory =
+        // const vendorDirectory =
             // path.delimiter + path.join(__dirname, '..', 'vendor')
             // process.env.PATH += vendorDirectory
-            driver = await new Builder().forBrowser('chrome').build()
-        dynamicLoading = new DynamicLoadingPage(driver)
-    })
-
-    afterEach(async function () {
-        await driver.quit()
+        dynamicLoadingPage = new DynamicLoadingPage(this.driver)
     })
 
     it('hidden element', async function () {
-        await dynamicLoading.loadExample('1')
+        await dynamicLoadingPage.loadExample('1')
         assert(
-            await dynamicLoading.isFinishTextPresent(), true, 'Finish text not displayed'
+            await dynamicLoadingPage.isFinishTextPresent(), true, 'Finish text not displayed'
+        )
+    })
+
+    it('rendered element', async function() {
+        await dynamicLoadingPage.loadExample('2')
+        assert(
+            await dynamicLoadingPage.isFinishTextPresent(), true, 'Finish text not displayed'
         )
     })
 })
