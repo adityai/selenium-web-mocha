@@ -15,6 +15,10 @@ class BasePage {
         await this.find(locator).click()
     }
 
+    async getText(locator) {
+        return await this.find(locator).getText()
+    }
+
     async type(locator, inputText) {
         await this.find(locator).sendKeys(inputText)
     }

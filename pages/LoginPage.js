@@ -24,11 +24,11 @@ class LoginPage extends BasePage {
     }
 
     async errorMessageBoxPresent() {
-        return await this.driver.findElement(ERROR_MESSAGE).isDisplayed()
+        return await this.isDisplayed(ERROR_MESSAGE)
     }
 
     async getErrorMessageText() {
-        return await this.driver.findElement(ERROR_MESSAGE).getText()
+        return await this.getText(ERROR_MESSAGE)
     }
 }
 
