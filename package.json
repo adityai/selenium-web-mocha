@@ -19,6 +19,6 @@
     "mocha-parallel-tests": "2.3.0"
   },
   "mocha":{
-    "timeout": 30000
+    "timeout": 60000
   }
 }
