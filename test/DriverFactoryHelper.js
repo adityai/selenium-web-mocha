@@ -3,7 +3,8 @@ const config = require('../lib/config.js')
 const driverFactory = new DriverFactory(config)
 
 beforeEach(async function() {
-    await driverFactory.build()
+    const testName = this.currentTest.fullTitle()
+    await driverFactory.build(testName)
     this.driver = driverFactory.driver
 })
 
