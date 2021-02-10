@@ -8,16 +8,14 @@ beforeEach(async function() {
     this.driver = driverFactory.driver
 })
 
-afterEach(async function() {
-    await driverFactory.quit()
-})
-
 afterEach(async function () {
-    if (this.currentTest.state == 'failed') {
+    const testPassed = this.currentTest.state === 'passed'
+    if (!testPassed) {
         driver.takeScreenshot().then(function (data) {
             takeScreenshot(data, 'failed.png')
         })
     }
+    await driverFactory.quit(testPassed)
 })
 
 function takeScreenshot(image, err) {
