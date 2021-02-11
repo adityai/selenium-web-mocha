@@ -7,7 +7,7 @@
     "test": "mocha"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --parallel test/*Test.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +18,11 @@
     "selenium-webdriver": "4.0.0-alpha.7",
     "mocha-parallel-tests": "2.3.0"
   },
-  "mocha":{
+  "mocha": {
     "timeout": 60000
+  },
+  "devDependencies": {
+    "mocha": "^8.1.0",
+    "mocha-parallel-tests": "^2.3.0"
   }
 }
